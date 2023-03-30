@@ -8,6 +8,11 @@ enum layer_number {
   _ADJUST,
 };
 
+enum custom_keycodes {
+    RIGHT_ARROW = SAFE_RANGE,
+    ASSIGN,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* DVORAK
@@ -60,28 +65,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |      |   [  |   ]  |   \  |
+ * |      |      |  =>  |  :=  |      |      |                    |      |   {  |   }  |      |      |   \  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   ~  |
+ * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|      |   (  |   )  |      |      |   ~  |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |   _  |   +  |   {  |   }  |   |  |
+ * |      |      |      |      |      |      |-------|    |-------|      |   [  |   ]  |      |      |   |  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
 [_LOWER] = LAYOUT(
-  _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______,                   _______, _______, _______, KC_LBRC, KC_RBRC, KC_BSLS,
-  KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD,
-  _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
+  _______, _______, _______,     _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
+  _______, _______, RIGHT_ARROW, ASSIGN, _______, _______,                    XXXXXXX, KC_LCBR, KC_RCBR, _______, _______, KC_BSLS,
+  KC_GRV,  KC_EXLM, KC_AT,       KC_HASH, KC_DLR,  KC_PERC,                   XXXXXXX, KC_LPRN, KC_RPRN, _______, _______, KC_TILD,
+  _______, _______, _______,     _______, _______, _______, _______, _______, XXXXXXX, KC_LBRC, KC_RBRC, _______, _______, KC_PIPE,
+                                 _______, _______, _______, _______, _______,  _______, _______, _______
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |   F6 |  F7  |  F8  |  F9  | F10  | Del  |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |   F6 |  F7  |  F8  |  F9  | F10  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |Alt+Up|      |      |                    |      |      |  Up  |      |      |      |
+ * |      |      |      |Alt+Up|      |      |                    |      |Alt+Lf|  Up  |Alt+Rt|      | Del  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |Cmd+Lt|Alt+Lt|Alt+Dn|Alt+Rt|Cmd+Rt|-------.    ,-------|      | Left | Down |Right |      |      |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
@@ -93,32 +98,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_RAISE] = LAYOUT(
-  _______, KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,                        KC_F6,   KC_F7,   KC_F8,    KC_F9,   KC_F10,  KC_DEL,
-  _______, _______,    _______,    A(KC_UP),   _______,    _______,                      _______, _______, KC_UP,    _______, _______, _______,
-  _______, G(KC_LEFT), A(KC_LEFT), A(KC_DOWN), A(KC_RGHT), G(KC_RGHT),                   XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT,  XXXXXXX, XXXXXXX,
-  _______, _______,    _______,    _______,    _______,    _______,    _______, _______, _______, _______, _______, KC_F11,   KC_F12,  _______,
+  _______, KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,                        KC_F6,   KC_F7,      KC_F8,    KC_F9,     KC_F10,  _______,
+  _______, _______,    _______,    A(KC_UP),   _______,    _______,                      _______, A(KC_LEFT), KC_UP,   A(KC_RGHT), _______, KC_DEL,
+  _______, G(KC_LEFT), A(KC_LEFT), A(KC_DOWN), A(KC_RGHT), G(KC_RGHT),                   XXXXXXX, KC_LEFT,    KC_DOWN, KC_RGHT,    XXXXXXX, XXXXXXX,
+  _______, _______,    _______,    _______,    _______,    _______,    _______, _______, _______, _______,    _______, KC_F11,     KC_F12,  _______,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |DVORAK|      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |DVORAK| Brt- | Brt+ |      |      |      |                    |      |      | Mute | Vol- | Vol+ |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |QWERTY|      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |RGB ON| HUE+ | SAT+ | VAL+ |
+ * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
+ * |      |      |      |      |      |      |-------|    |-------|      |      |  <<  |  >>  | > || |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
   [_ADJUST] = LAYOUT(
-  DF(_DVORAK), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, DF(_QWERTY), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
+  DF(_DVORAK), KC_BRID,     KC_BRIU, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, XXXXXXX,
+  XXXXXXX,     DF(_QWERTY), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,     XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,     XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_MNXT, KC_MPLY, XXXXXXX,
+                                     _______, _______, _______, _______, _______,  _______, _______, _______
   ),
 };
 
@@ -164,6 +169,24 @@ bool oled_task_user(void) {
 #endif // OLED_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // Begin custom macro handling
+    switch (keycode)
+    {
+    case RIGHT_ARROW:
+        if (record->event.pressed) {
+            SEND_STRING("=>");
+        }
+        break;
+    case ASSIGN:
+        if (record->event.pressed) {
+            SEND_STRING(":=");
+        }
+        break;
+    default:
+        break;
+    }
+    // End custom macro handling
+
   if (record->event.pressed) {
 #ifdef OLED_ENABLE
     set_keylog(keycode, record);
